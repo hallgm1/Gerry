@@ -41,8 +41,7 @@
                         <input type="text" id="passName" oninput="convertToUpperCase(this)" placeholder="Passenger Name" class="p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none force-uppercase">
                         <input type="text" id="passPhone" oninput="convertToUpperCase(this)" placeholder="Phone Number" class="p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none force-uppercase">
                         
-                        <input type="text" id="seatNo" oninput="convertToUpperCase(this)" placeholder="Seat No" class="p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none force-uppercase">
-                        <input type="text" id="seatType" oninput="convertToUpperCase(this)" placeholder="Seat Type" class="p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none force-uppercase">
+                        <input type="text" id="seatNo" oninput="convertToUpperCase(this)" placeholder="Seat No" class="sm:col-span-2 p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none force-uppercase">
                         
                         <input type="text" id="pickup" oninput="convertToUpperCase(this)" placeholder="Pickup Point" class="p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none force-uppercase">
                         <input type="text" id="dropoff" oninput="convertToUpperCase(this)" placeholder="Drop off Point" class="p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none force-uppercase">
@@ -75,17 +74,6 @@
                         <div>
                             <label class="text-[10px] font-bold text-gray-400 uppercase block mb-1">Travel Date</label>
                             <input type="text" id="travelDate" placeholder="Mar 11, 2026" oninput="convertToUpperCase(this)" class="w-full p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none force-uppercase">
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-3">
-                        <div>
-                            <label class="text-[10px] font-bold text-gray-400 uppercase block mb-1">Header Dep. Time</label>
-                            <input type="text" id="hdrDepTime" value="06:00" oninput="convertToUpperCase(this)" class="w-full p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none force-uppercase">
-                        </div>
-                        <div>
-                            <label class="text-[10px] font-bold text-gray-400 uppercase block mb-1">Header Arr. Time</label>
-                            <input type="text" id="hdrArrTime" value="15:00" oninput="convertToUpperCase(this)" class="w-full p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none force-uppercase">
                         </div>
                     </div>
                 </div>
@@ -134,7 +122,7 @@
                                 <span class="text-[10px] text-gray-400 block normal-case">From</span>
                                 <span id="lblFromCode" class="font-black text-lg block leading-tight">DSM</span>
                                 <span id="lblFromFull" class="text-[9px] text-gray-500 block truncate">DAR ES SALAAM</span>
-                                <span id="lblHdrDep" class="text-[10px] font-bold text-gray-700 block">06:00</span>
+                                <span id="lblHdrDep" class="text-[10px] font-bold text-gray-700 block">06:00 AM</span>
                             </div>
                             <div class="w-1/3 flex flex-col items-center justify-center px-1">
                                 <div class="flex items-center space-x-1 w-full justify-center">
@@ -158,8 +146,8 @@
                             <div class="font-bold text-gray-800 mb-1 text-[12px] normal-case">Bus Info</div>
                             <div class="flex justify-between"><span class="text-gray-500 normal-case">Bus Name</span><span id="lblBusName" class="font-bold text-right">-</span></div>
                             <div class="flex justify-between"><span class="text-gray-500 normal-case">Bus Reg Number</span><span id="lblBusReg" class="font-bold uppercase text-right">-</span></div>
-                            <div class="flex justify-between"><span class="text-gray-500 normal-case">Reporting Time</span><span id="lblReport" class="font-semibold text-right">05:30</span></div>
-                            <div class="flex justify-between"><span class="text-gray-500 normal-case">Departure Time</span><span id="lblDep" class="font-semibold text-right">06:00</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500 normal-case">Reporting Time</span><span id="lblReport" class="font-semibold text-right">05:30 AM</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500 normal-case">Departure Time</span><span id="lblDep" class="font-semibold text-right">06:00 AM</span></div>
                             <div class="flex justify-between"><span class="text-gray-500 normal-case">Arrival Time</span><span id="lblArr" class="font-semibold text-right">15:00</span></div>
                             <div class="flex justify-between"><span class="text-gray-500 normal-case">Pickup</span><span id="lblPickup" class="font-medium text-right">-</span></div>
                             <div class="flex justify-between"><span class="text-gray-500 normal-case">Drop off Point</span><span id="lblDropoff" class="font-medium text-right">-</span></div>
@@ -170,7 +158,6 @@
                             <div class="flex justify-between"><span class="text-gray-500 normal-case">Name</span><span id="lblPassName" class="font-bold text-right">-</span></div>
                             <div class="flex justify-between"><span class="text-gray-500 normal-case">Phone Number</span><span id="lblPassPhone" class="font-medium text-right">-</span></div>
                             <div class="flex justify-between"><span class="text-gray-500 normal-case">Seat No</span><span id="lblSeatNo" class="font-bold text-right">-</span></div>
-                            <div class="flex justify-between"><span class="text-gray-500 normal-case">Seat Type</span><span id="lblSeatType" class="font-medium text-right">-</span></div>
                         </div>
 
                         <div class="mx-4 p-3 bg-gray-50 rounded-lg flex justify-between items-center border-t border-b border-gray-100 my-2">
@@ -208,7 +195,6 @@
     <script>
         let currentFareValue = 0;
 
-        // Force user text input to become uppercase programmatically on entry
         function convertToUpperCase(element) {
             element.value = element.value.toUpperCase();
         }
@@ -227,13 +213,15 @@
             document.getElementById('lblPassName').innerText = document.getElementById('passName').value || "-";
             document.getElementById('lblPassPhone').innerText = document.getElementById('passPhone').value || "-";
             document.getElementById('lblSeatNo').innerText = document.getElementById('seatNo').value || "-";
-            document.getElementById('lblSeatType').innerText = document.getElementById('seatType').value || "STANDARD";
             document.getElementById('lblPickup').innerText = document.getElementById('pickup').value || "MAIN TERMINAL";
             document.getElementById('lblDropoff').innerText = document.getElementById('dropoff').value || "DESTINATION HUB";
             
+            const depValue = document.getElementById('depTime').value;
+            const arrValue = document.getElementById('arrTime').value;
+            
             document.getElementById('lblReport').innerText = document.getElementById('reportTime').value;
-            document.getElementById('lblDep').innerText = document.getElementById('depTime').value;
-            document.getElementById('lblArr').innerText = document.getElementById('arrTime').value;
+            document.getElementById('lblDep').innerText = depValue;
+            document.getElementById('lblArr').innerText = arrValue;
             
             const fromCd = document.getElementById('fromCode').value || "DSM";
             const toCd = document.getElementById('toCode').value || "DOM";
@@ -243,8 +231,8 @@
             document.getElementById('lblToFull').innerText = toCd === "DOM" ? "DODOMA" : toCd + " AREA";
             
             document.getElementById('lblTravelDate').innerText = document.getElementById('travelDate').value || "MAR 11, 2026";
-            document.getElementById('lblHdrDep').innerText = document.getElementById('hdrDepTime').value;
-            document.getElementById('lblHdrArr').innerText = document.getElementById('hdrArrTime').value;
+            document.getElementById('lblHdrDep').innerText = depValue;
+            document.getElementById('lblHdrArr').innerText = arrValue;
 
             const now = new Date();
             const timeStr = now.toISOString().slice(0,10) + " " + now.toTimeString().slice(0,8).replace(/:/g,'');
@@ -262,7 +250,7 @@
                    `*ROUTE:* ${document.getElementById('lblFromCode').innerText} -> ${document.getElementById('lblToCode').innerText}\n` +
                    `*DATE:* ${document.getElementById('lblTravelDate').innerText}\n` +
                    `*BUS INFO:* ${document.getElementById('lblBusName').innerText} (${document.getElementById('lblBusReg').innerText})\n` +
-                   `*SEAT:* ${document.getElementById('lblSeatNo').innerText} [${document.getElementById('lblSeatType').innerText}]\n` +
+                   `*SEAT:* ${document.getElementById('lblSeatNo').innerText}\n` +
                    `*REPORTING:* ${document.getElementById('lblReport').innerText}\n` +
                    `*DEPARTURE:* ${document.getElementById('lblDep').innerText}\n` +
                    `----------------------------\n` +
