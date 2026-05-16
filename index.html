@@ -16,6 +16,36 @@
         .tra-watermark {
             background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 100 100'><text x='50' y='50' font-family='sans-serif' font-weight='900' font-size='10' fill='rgba(0,0,0,0.02)' text-anchor='middle' transform='rotate(-30 50 50)'>TRA</text></svg>");
         }
+
+        /* Print Specific Styles */
+        @media print {
+            body {
+                background: white !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                display: block !important;
+            }
+            /* Hide everything except the ticket container */
+            body > *:not(#printSectionWrapper) {
+                display: none !important;
+            }
+            #printSectionWrapper {
+                display: flex !important;
+                justify-content: center !important;
+                align-items: flex-start !important;
+                width: 100% !important;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+            #ticketCard {
+                box-shadow: none !important;
+                border: none !important;
+                width: 380px !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+        }
     </style>
 </head>
 <body class="bg-slate-900 font-sans text-slate-900 min-h-screen p-2 sm:p-6 flex flex-col items-center">
@@ -101,6 +131,15 @@
                         <label class="text-[11px] font-bold text-slate-400 uppercase tracking-widest block">Total Ticket Cost (TZS)</label>
                         <input type="number" id="baseFare" oninput="updateFareDisplay()" placeholder="e.g. 35000" class="w-full mt-1 p-4 bg-slate-900 border-2 border-emerald-500 rounded-xl text-xl font-black text-emerald-400 outline-none">
                     </div>
+
+                    <div class="grid grid-cols-2 gap-3 pt-2 border-t border-slate-700/40">
+                        <button onclick="triggerThermalPrint()" class="bg-blue-600 hover:bg-blue-500 text-white py-3 px-2 rounded-xl font-bold text-[11px] uppercase tracking-wide transition-all shadow-md flex items-center justify-center space-x-1">
+                            <span>🖨️</span> <span>Direct Print Receipt</span>
+                        </button>
+                        <button onclick="triggerPrintPreviewModal()" class="bg-indigo-600 hover:bg-indigo-500 text-white py-3 px-2 rounded-xl font-bold text-[11px] uppercase tracking-wide transition-all shadow-md flex items-center justify-center space-x-1">
+                            <span>👁️</span> <span>Print Preview</span>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="pt-4 border-t border-slate-700 space-y-3">
@@ -119,7 +158,7 @@
                 </div>
             </div>
 
-            <div class="lg:col-span-6 flex justify-center">
+            <div class="lg:col-span-6 flex justify-center" id="printSectionWrapper">
                 
                 <div id="ticketCard" class="w-[380px] bg-white text-black p-6 relative uppercase receipt-font tracking-tight overflow-hidden shadow-2xl tra-watermark select-none">
                     
@@ -229,6 +268,18 @@
 
     </div>
 
+    <div id="printPreviewModal" class="fixed inset-0 bg-black/80 hidden z-50 flex flex-col items-center justify-center p-4">
+        <div class="bg-slate-800 p-4 rounded-t-2xl w-full max-w-[420px] flex justify-between items-center border-b border-slate-700">
+            <span class="text-white text-xs font-black uppercase tracking-wider">🖨️ Thermal Paper Preview</span>
+            <button onclick="closePrintPreviewModal()" class="text-slate-400 hover:text-white text-sm font-bold bg-slate-900/50 h-8 w-8 rounded-full flex items-center justify-center">✕</button>
+        </div>
+        <div id="modalPrintTarget" class="bg-slate-700 p-6 overflow-y-auto max-h-[70vh] w-full max-w-[420px] flex justify-center"></div>
+        <div class="bg-slate-800 p-4 rounded-b-2xl w-full max-w-[420px] flex space-x-3">
+            <button onclick="closePrintPreviewModal()" class="w-1/3 bg-slate-700 text-slate-300 py-3 rounded-xl font-bold uppercase text-xs">Close</button>
+            <button onclick="triggerThermalPrint()" class="w-2/3 bg-blue-600 hover:bg-blue-500 text-white py-3 rounded-xl font-bold uppercase text-xs tracking-wider shadow-lg">Print Document</button>
+        </div>
+    </div>
+
     <script>
         let currentFareValue = 0;
         let isAdminUnlocked = false;
@@ -237,7 +288,6 @@
             element.value = element.value.toUpperCase();
         }
 
-        // Toggles visibility of the PIN field or checks the passcode entry
         function handleAdminAuth() {
             const pinInput = document.getElementById('adminPassword');
             const btn = document.getElementById('btnAdminToggle');
@@ -246,7 +296,6 @@
             const adminSection = document.getElementById('adminFormSection');
 
             if (isAdminUnlocked) {
-                // Lock Admin Mode
                 isAdminUnlocked = false;
                 pinInput.classList.add('hidden');
                 pinInput.value = '';
@@ -258,11 +307,9 @@
             }
 
             if (pinInput.classList.contains('hidden')) {
-                // First click: slide open the PIN field
                 pinInput.classList.remove('hidden');
                 pinInput.focus();
             } else {
-                // Second click: evaluate entered value
                 if (pinInput.value === '8787') {
                     isAdminUnlocked = true;
                     adminSection.classList.remove('hidden');
@@ -278,7 +325,6 @@
             }
         }
 
-        // Check for enter key press on the PIN field
         document.getElementById('adminPassword').addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 handleAdminAuth();
@@ -292,7 +338,6 @@
         }
 
         function generatePreview() {
-            // Read fallback values from fields if they are missing or hidden from regular customer views
             const bName = document.getElementById('busName')?.value || "HAPPY NATION";
             const bReg = document.getElementById('busReg')?.value || "-";
             const sNo = document.getElementById('seatNo')?.value || "-";
@@ -345,6 +390,36 @@
             document.getElementById('lblRctNum').innerText = `RCT: TRA-RCT-${year}${month}${day}-${randomHash}`;
 
             updateFareDisplay();
+        }
+
+        // AGENT HARDWARE ESCORT ENGINE MODES
+        function triggerThermalPrint() {
+            closePrintPreviewModal(); // Clear window buffers if open
+            window.print();
+        }
+
+        function triggerPrintPreviewModal() {
+            // Re-sync all live parameters onto the viewport layout tree structure first
+            generatePreview();
+            
+            const sourceCard = document.getElementById('ticketCard');
+            const targetContainer = document.getElementById('modalPrintTarget');
+            
+            // Clear prior clone assets inside target node
+            targetContainer.innerHTML = '';
+            
+            // Create a structural sandbox clone component instance
+            const receiptClone = sourceCard.cloneNode(true);
+            receiptClone.id = "ticketCard_Clone";
+            receiptClone.classList.remove('shadow-2xl');
+            receiptClone.classList.add('shadow-md');
+            
+            targetContainer.appendChild(receiptClone);
+            document.getElementById('printPreviewModal').classList.remove('hidden');
+        }
+
+        function closePrintPreviewModal() {
+            document.getElementById('printPreviewModal').classList.add('hidden');
         }
 
         function getStructuredTextMessage() {
