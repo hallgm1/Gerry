@@ -3,213 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GERRY TRAVEL - OFFICIAL RECEIPT GEN</title>
+    <title>GERRY TRAVEL TICKET GEN</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Inter:wght@400;600;800;900&display=swap');
-        
-        .receipt-font {
-            font-family: 'Inter', sans-serif;
+        .ticket-dashed-line {
+            background-image: linear-gradient(to right, #ccc 50%, rgba(255,255,255,0) 0%);
+            background-position: bottom;
+            background-size: 10px 1px;
+            background-repeat: repeat-x;
         }
-        .mono-font {
-            font-family: 'Courier Prime', monospace;
-        }
-        .receipt-dashed {
-            border-top: 2px dashed #000000;
-        }
+        /* Forces text inside inputs to display visually as uppercase instantly */
         .force-uppercase {
             text-transform: uppercase;
         }
-        /* Subscribed TRA Repeating Background Graphic Watermark Pattern */
-        .tra-watermark {
-            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 100 100'><text x='50' y='50' font-family='sans-serif' font-weight='900' font-size='10' fill='rgba(0,0,0,0.03)' text-anchor='middle' transform='rotate(-30 50 50)'>TRA</text></svg>");
-        }
     </style>
 </head>
-<body class="bg-[#1a202c] font-sans text-slate-900 min-h-screen p-2 sm:p-6 flex flex-col items-center">
+<body class="bg-[#2d3748] font-sans text-[#1a202c] min-h-screen p-4 flex flex-col items-center">
 
-    <div class="w-full max-w-6xl space-y-6">
+    <div class="w-full max-w-5xl space-y-6">
         
-        <h1 class="text-white text-xl font-black uppercase tracking-widest text-center my-2">
-            GERRY TRAVEL TICKET & VFD MANAGEMENT SYSTEM
+        <h1 class="text-white text-xl font-bold uppercase tracking-wider text-center my-2">
+            GERRY TRAVEL TICKET GEN
         </h1>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
             
-            <div class="lg:col-span-6 bg-slate-800 p-6 rounded-2xl shadow-xl space-y-4 border border-slate-700">
-                <h2 class="text-white text-xs font-bold uppercase tracking-wider text-slate-400">1. Entry Registration System Parameters</h2>
-                
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <input type="text" id="busName" oninput="convertToUpperCase(this)" placeholder="Bus Operator (e.g. HAPPY NATION)" class="p-3 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white outline-none force-uppercase">
-                    <input type="text" id="busReg" oninput="convertToUpperCase(this)" placeholder="Registration No (e.g. T 724 DUY)" class="p-3 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white outline-none force-uppercase">
+            <div class="lg:col-span-7 space-y-6">
+
+                <div class="bg-white p-6 rounded-[1.5rem] shadow-xl space-y-4">
+                    <h2 class="text-xs font-bold text-[#4a5568] uppercase tracking-wider">1. Complete Ticket Details (Fillable fields)</h2>
                     
-                    <input type="text" id="passName" oninput="convertToUpperCase(this)" placeholder="Passenger Name" class="p-3 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white outline-none force-uppercase">
-                    <input type="text" id="passPhone" oninput="convertToUpperCase(this)" placeholder="Phone Number" class="p-3 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white outline-none force-uppercase">
-                    
-                    <input type="text" id="seatNo" oninput="convertToUpperCase(this)" placeholder="Seat No" class="p-3 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white outline-none force-uppercase">
-                    <input type="text" id="seatType" oninput="convertToUpperCase(this)" value="LUXURY" placeholder="Seat Type" class="p-3 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white outline-none force-uppercase">
-                    
-                    <input type="text" id="pickup" oninput="convertToUpperCase(this)" placeholder="Pickup Terminal" class="p-3 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white outline-none force-uppercase">
-                    <input type="text" id="dropoff" oninput="convertToUpperCase(this)" placeholder="Drop off Destination" class="p-3 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white outline-none force-uppercase">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <input type="text" id="busName" oninput="convertToUpperCase(this)" placeholder="Bus Name" class="p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none force-uppercase">
+                        <input type="text" id="busReg" oninput="convertToUpperCase(this)" placeholder="REG NUMBER" class="p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none force-uppercase">
+                        
+                        <input type="text" id="passName" oninput="convertToUpperCase(this)" placeholder="Passenger Name" class="p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none force-uppercase">
+                        <input type="text" id="passPhone" oninput="convertToUpperCase(this)" placeholder="Phone Number" class="p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none force-uppercase">
+                        
+                        <input type="text" id="seatNo" oninput="convertToUpperCase(this)" placeholder="Seat No" class="sm:col-span-2 p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none force-uppercase">
+                        
+                        <input type="text" id="pickup" oninput="convertToUpperCase(this)" placeholder="Pickup Point" class="p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none force-uppercase">
+                        <input type="text" id="dropoff" oninput="convertToUpperCase(this)" placeholder="Drop off Point" class="p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none force-uppercase">
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-3 pt-2">
+                        <div>
+                            <label class="text-[10px] font-bold text-gray-400 uppercase block mb-1">Reporting (24h)</label>
+                            <input type="text" id="reportTime" value="05:30" oninput="convertToUpperCase(this)" class="w-full p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none force-uppercase">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-gray-400 uppercase block mb-1">Departure (24h)</label>
+                            <input type="text" id="depTime" value="06:00" oninput="convertToUpperCase(this)" class="w-full p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none force-uppercase">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-gray-400 uppercase block mb-1">Arrival (24h)</label>
+                            <input type="text" id="arrTime" value="15:00" oninput="convertToUpperCase(this)" class="w-full p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none force-uppercase">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-3">
+                        <div>
+                            <label class="text-[10px] font-bold text-gray-400 uppercase block mb-1">From City/Code</label>
+                            <input type="text" id="fromCode" placeholder="DSM" oninput="convertToUpperCase(this)" class="w-full p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none force-uppercase">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-gray-400 uppercase block mb-1">To City/Code</label>
+                            <input type="text" id="toCode" placeholder="DOM" oninput="convertToUpperCase(this)" class="w-full p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none force-uppercase">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-gray-400 uppercase block mb-1">Travel Date</label>
+                            <input type="text" id="travelDate" placeholder="Mar 11, 2026" oninput="convertToUpperCase(this)" class="w-full p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none force-uppercase">
+                        </div>
+                    </div>
                 </div>
 
-                <div class="grid grid-cols-3 gap-3 pt-2">
+                <div class="bg-white p-6 rounded-[1.5rem] shadow-xl space-y-4">
+                    <h3 class="text-xs font-bold text-[#4a5568] uppercase tracking-wider">3. Fare & Actions</h3>
                     <div>
-                        <label class="text-[10px] font-bold text-slate-400 uppercase block mb-1">Reporting</label>
-                        <input type="text" id="reportTime" value="05:30" oninput="convertToUpperCase(this)" class="w-full p-3 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white outline-none force-uppercase">
-                    </div>
-                    <div>
-                        <label class="text-[10px] font-bold text-slate-400 uppercase block mb-1">Departure</label>
-                        <input type="text" id="depTime" value="06:00" oninput="convertToUpperCase(this)" class="w-full p-3 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white outline-none force-uppercase">
-                    </div>
-                    <div>
-                        <label class="text-[10px] font-bold text-slate-400 uppercase block mb-1">Arrival</label>
-                        <input type="text" id="arrTime" value="15:00" oninput="convertToUpperCase(this)" class="w-full p-3 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white outline-none force-uppercase">
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-3 gap-3">
-                    <div>
-                        <label class="text-[10px] font-bold text-slate-400 uppercase block mb-1">From Code</label>
-                        <input type="text" id="fromCode" placeholder="DSM" oninput="convertToUpperCase(this)" class="w-full p-3 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white outline-none force-uppercase">
-                    </div>
-                    <div>
-                        <label class="text-[10px] font-bold text-slate-400 uppercase block mb-1">To Code</label>
-                        <input type="text" id="toCode" placeholder="DOM" oninput="convertToUpperCase(this)" class="w-full p-3 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white outline-none force-uppercase">
-                    </div>
-                    <div>
-                        <label class="text-[10px] font-bold text-slate-400 uppercase block mb-1">Travel Date</label>
-                        <input type="text" id="travelDate" placeholder="MAR 11, 2026" oninput="convertToUpperCase(this)" class="w-full p-3 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white outline-none force-uppercase">
-                    </div>
-                </div>
-
-                <div class="pt-4 border-t border-slate-700 space-y-4">
-                    <div>
-                        <label class="text-[11px] font-bold text-slate-400 uppercase tracking-widest block">Total Ticket Cost (TZS)</label>
-                        <input type="number" id="baseFare" oninput="updateFareDisplay()" placeholder="e.g. 35000" class="w-full mt-1 p-4 bg-slate-900 border-2 border-emerald-500 rounded-xl text-xl font-black text-emerald-400 outline-none">
+                        <label class="text-[11px] font-bold text-gray-400 uppercase tracking-widest ml-1">Total Ticket Fare</label>
+                        <input type="number" id="baseFare" oninput="updateFareDisplay()" placeholder="Enter Ticket Fare" 
+                            class="w-full mt-1 p-4 bg-green-50/50 border border-green-200 text-green-900 rounded-xl text-lg font-bold outline-none focus:border-green-500">
                     </div>
 
-                    <button onclick="generatePreview()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white py-4 rounded-xl font-bold uppercase text-xs tracking-widest shadow-md transition-all">
-                        Sync Data to Live Stamp
+                    <button onclick="generatePreview()" class="w-full bg-[#1a202c] hover:bg-slate-800 text-white py-4 rounded-xl font-bold uppercase text-xs tracking-widest shadow-md transition-all">
+                        Preview Ticket
                     </button>
 
-                    <div class="grid grid-cols-2 gap-3">
-                        <button onclick="shareViaSMS()" class="bg-slate-700 hover:bg-slate-600 text-white py-3 px-2 rounded-xl font-bold text-[11px] uppercase tracking-wide">
-                            Text SMS Link
+                    <div class="grid grid-cols-2 gap-3 pt-1">
+                        <button onclick="shareViaSMS()" class="bg-[#2d3748] hover:bg-slate-700 text-white py-3.5 px-3 rounded-xl font-bold text-[11px] uppercase tracking-wide text-center transition-all">
+                            Share VIA SMS<br><span class="text-[9px] font-normal opacity-70">(Send Text)</span>
                         </button>
-                        <button onclick="shareViaWhatsApp()" class="bg-emerald-500 hover:bg-emerald-400 text-white py-3 px-2 rounded-xl font-bold text-[11px] uppercase tracking-wide shadow-lg">
-                            Share VFD Image
+                        <button onclick="shareViaWhatsApp()" class="bg-[#25D366] hover:bg-[#20ba5a] text-white py-3.5 px-3 rounded-xl font-bold text-[11px] uppercase tracking-wide text-center transition-all">
+                            Share VIA WhatsApp<br><span class="text-[9px] font-normal opacity-90">(Share Image)</span>
                         </button>
                     </div>
                 </div>
+
             </div>
 
-            <div class="lg:col-span-6 flex justify-center">
-                
-                <div id="ticketCard" class="w-[380px] bg-white text-black p-6 relative uppercase receipt-font tracking-tight overflow-hidden shadow-2xl tra-watermark selection:bg-transparent">
+            <div class="lg:col-span-5">
+                <div class="bg-white p-4 rounded-[1.5rem] shadow-xl sticky top-6">
+                    <h2 class="text-xs font-bold text-[#4a5568] uppercase tracking-wider mb-4">4. Ticket Preview</h2>
                     
-                    <div class="absolute top-0 left-0 bottom-0 w-[14px] bg-white border-r border-gray-200 text-[6px] text-gray-400 flex flex-col justify-around items-center py-4 select-none font-bold tracking-tight z-10 [writing-mode:vertical-lr]">
-                        <span>TRA TANZANIA REVENUE AUTHORITY TRA TANZANIA REVENUE AUTHORITY</span>
-                    </div>
-                    <div class="absolute top-0 right-0 bottom-0 w-[14px] bg-white border-l border-gray-200 text-[6px] text-gray-400 flex flex-col justify-around items-center py-4 select-none font-bold tracking-tight z-10 [writing-mode:vertical-lr] rotate-180">
-                        <span>TRA TANZANIA REVENUE AUTHORITY TRA TANZANIA REVENUE AUTHORITY</span>
-                    </div>
-
-                    <div class="px-2 py-1">
+                    <div id="ticketCard" class="bg-white text-black border border-gray-200 rounded-md overflow-hidden font-sans relative uppercase shadow-sm" style="width: 100%; max-w: 380px; margin: 0 auto;">
                         
-                        <div class="text-center space-y-0.5 mb-4">
-                            <h3 id="lblBusHeader" class="text-lg font-black tracking-tight leading-tight">HAPPY NATION</h3>
-                            <p class="text-[10px] font-bold normal-case tracking-normal">Intercity Fiscal Ticketing Hub</p>
-                            <div class="inline-block border-2 border-black text-black text-[9px] font-black px-3 py-px rounded mt-1">
-                                PAID FISCAL
+                        <div class="p-4 flex justify-between items-start pb-2">
+                            <div>
+                                <h3 id="lblBusHeader" class="font-extrabold text-base tracking-tight uppercase">HAPPY NATION</h3>
+                            </div>
+                            <div>
+                                <span class="bg-[#25D366] text-white text-[9px] font-extrabold px-2 py-0.5 rounded uppercase">Paid</span>
                             </div>
                         </div>
 
-                        <div class="flex justify-between items-center text-xs border-b-2 border-black pb-3 mb-3">
+                        <div class="px-4 py-2 flex justify-between items-center text-xs">
                             <div class="w-1/3">
-                                <span class="text-[9px] text-gray-500 font-bold block">FROM:</span>
-                                <span id="lblFromCode" class="font-black text-xl block leading-none">DSM</span>
-                                <span id="lblFromFull" class="text-[9px] font-semibold text-gray-700 block truncate">DAR ES SALAAM</span>
-                                <span id="lblHdrDep" class="text-[11px] font-black block mt-0.5">06:00 HRS</span>
+                                <span class="text-[10px] text-gray-400 block normal-case">From</span>
+                                <span id="lblFromCode" class="font-black text-lg block leading-tight">DSM</span>
+                                <span id="lblFromFull" class="text-[9px] text-gray-500 block truncate">DAR ES SALAAM</span>
+                                <span id="lblHdrDep" class="text-[10px] font-bold text-gray-700 block">06:00</span>
                             </div>
-                            <div class="w-1/3 flex flex-col items-center justify-center">
-                                <span class="text-[14px] leading-none">🚌</span>
-                                <div class="w-full h-[2px] bg-black my-1 relative">
-                                    <div class="absolute w-1.5 h-1.5 bg-black rounded-full top-[-2px] left-0"></div>
-                                    <div class="absolute w-1.5 h-1.5 bg-black rounded-full top-[-2px] right-0"></div>
+                            <div class="w-1/3 flex flex-col items-center justify-center px-1">
+                                <div class="flex items-center space-x-1 w-full justify-center">
+                                    <div class="w-2 h-2 rounded-full bg-yellow-400"></div>
+                                    <div class="h-[2px] bg-gray-200 flex-grow"></div>
+                                    <div class="w-5 h-5 rounded-full bg-green-600 flex items-center justify-center text-white text-[9px]">🚌</div>
+                                    <div class="h-[2px] bg-gray-200 flex-grow"></div>
+                                    <div class="w-2 h-2 rounded-full bg-teal-400"></div>
                                 </div>
-                                <span id="lblTravelDate" class="text-[9px] font-black text-gray-900 mt-px whitespace-nowrap">MAR 11, 2026</span>
+                                <span id="lblTravelDate" class="text-[9px] font-bold text-gray-600 mt-1 uppercase whitespace-nowrap">MAR 11, 2026</span>
                             </div>
                             <div class="w-1/3 text-right">
-                                <span class="text-[9px] text-gray-500 font-bold block">TO:</span>
-                                <span id="lblToCode" class="font-black text-xl block leading-none">DOM</span>
-                                <span id="lblToFull" class="text-[9px] font-semibold text-gray-700 block truncate">DODOMA</span>
-                                <span id="lblHdrArr" class="text-[11px] font-black block mt-0.5">15:00 HRS</span>
+                                <span class="text-[10px] text-gray-400 block normal-case">To</span>
+                                <span id="lblToCode" class="font-black text-lg block leading-tight">DOM</span>
+                                <span id="lblToFull" class="text-[9px] text-gray-500 block truncate">DODOMA</span>
+                                <span id="lblHdrArr" class="text-[10px] font-bold text-gray-700 block">15:00</span>
                             </div>
                         </div>
 
-                        <div class="space-y-1.5 text-xs pb-3">
-                            <div class="font-black text-[11px] border-b border-gray-200 pb-0.5 mb-1">TRANSACTION INFO</div>
-                            <div class="flex justify-between"><span>BUS OPERATOR:</span><span id="lblBusName" class="font-black text-right">-</span></div>
-                            <div class="flex justify-between"><span>REGISTRATION NO:</span><span id="lblBusReg" class="font-black text-right">-</span></div>
-                            <div class="flex justify-between"><span>REPORTING TIME:</span><span id="lblReport" class="font-bold text-right">05:30</span></div>
-                            <div class="flex justify-between"><span>DEPARTURE TIME:</span><span id="lblDep" class="font-bold text-right">06:00</span></div>
-                            <div class="flex justify-between"><span>ESTIMATED ARRIVAL:</span><span id="lblArr" class="font-bold text-right">15:00</span></div>
-                            <div class="flex justify-between"><span>PICKUP POINT:</span><span id="lblPickup" class="font-semibold text-right">-</span></div>
-                            <div class="flex justify-between"><span>DROPOFF STATION:</span><span id="lblDropoff" class="font-semibold text-right">-</span></div>
+                        <div class="p-4 space-y-2 text-[11px] border-t border-gray-100">
+                            <div class="font-bold text-gray-800 mb-1 text-[12px] normal-case">Bus Info</div>
+                            <div class="flex justify-between"><span class="text-gray-500 normal-case">Bus Name</span><span id="lblBusName" class="font-bold text-right">-</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500 normal-case">Bus Reg Number</span><span id="lblBusReg" class="font-bold uppercase text-right">-</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500 normal-case">Reporting Time</span><span id="lblReport" class="font-semibold text-right">05:30</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500 normal-case">Departure Time</span><span id="lblDep" class="font-semibold text-right">06:00</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500 normal-case">Arrival Time</span><span id="lblArr" class="font-semibold text-right">15:00</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500 normal-case">Pickup</span><span id="lblPickup" class="font-medium text-right">-</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500 normal-case">Drop off Point</span><span id="lblDropoff" class="font-medium text-right">-</span></div>
                         </div>
 
-                        <div class="space-y-1.5 text-xs border-t border-gray-300 pt-2.5 pb-3">
-                            <div class="font-black text-[11px] border-b border-gray-200 pb-0.5 mb-1">PASSENGER RECORD</div>
-                            <div class="flex justify-between"><span>PASSENGER NAME:</span><span id="lblPassName" class="font-black text-right">-</span></div>
-                            <div class="flex justify-between"><span>PHONE NUMBER:</span><span id="lblPassPhone" class="font-bold text-right">-</span></div>
-                            <div class="flex justify-between"><span>ASSIGNED SEAT NO:</span><span id="lblSeatNo" class="font-black text-sm text-right">-</span></div>
-                            <div class="flex justify-between"><span>SEAT CLASS:</span><span id="lblSeatType" class="font-bold text-right">LUXURY</span></div>
+                        <div class="p-4 space-y-2 text-[11px] border-t border-gray-50">
+                            <div class="font-bold text-gray-800 mb-1 text-[12px] normal-case">Passenger</div>
+                            <div class="flex justify-between"><span class="text-gray-500 normal-case">Name</span><span id="lblPassName" class="font-bold text-right">-</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500 normal-case">Phone Number</span><span id="lblPassPhone" class="font-medium text-right">-</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500 normal-case">Seat No</span><span id="lblSeatNo" class="font-bold text-right">-</span></div>
                         </div>
 
-                        <div class="receipt-dashed my-2"></div>
-                        <div class="py-1 flex justify-between items-center">
-                            <span class="text-xs font-black">TOTAL VALUE (VAT INC.):</span>
-                            <span id="lblTotalFare" class="text-lg font-black tracking-tight">TZS 0.00</span>
+                        <div class="mx-4 p-3 bg-gray-50 rounded-lg flex justify-between items-center border-t border-b border-gray-100 my-2">
+                            <span class="text-[11px] font-bold text-gray-500 uppercase normal-case">Total Fare</span>
+                            <span id="lblTotalFare" class="text-base font-black text-slate-900">TZS 0.00</span>
                         </div>
-                        <div class="receipt-dashed my-2"></div>
 
-                        <div class="pt-2 flex justify-between items-start">
-                            
-                            <div class="space-y-1 text-[10px] max-w-[62%] text-left">
-                                <p class="font-black text-black text-[11px]">TRA FISCAL STAMP</p>
-                                <div class="mono-font text-[9px] space-y-px text-gray-900 font-bold leading-tight">
-                                    <p class="truncate">REF: 902168900060</p>
-                                    <p id="lblRctNum" class="truncate">RCT: TRA-RCT-20260307-5A3F</p>
-                                    <p>VFD ID: TZ-VFD-8491024</p>
-                                    <p class="text-[8px] font-sans mt-1 text-gray-500">PRINT DATE/TIME:<br><span id="lblTimestamp" class="font-mono font-bold text-black text-[9px]">2026-03-07 12:59:03</span></p>
-                                </div>
+                        <div class="ticket-dashed-line my-4 w-full h-[1px]"></div>
+
+                        <div class="p-4 pt-1 flex justify-between items-end bg-gray-50/50 normal-case">
+                            <div class="space-y-1 text-[10px] max-w-[60%]">
+                                <p class="font-bold text-gray-800">Legal Receipt Information</p>
+                                <p class="text-gray-500 leading-tight">Ticket Reference Number<br><span class="font-mono font-bold text-black text-[11px]">902168900060</span></p>
+                                <p class="text-gray-500 leading-tight">TRA VFD Number<br><span class="font-mono text-black">NULL</span></p>
+                                <p class="text-gray-400 text-[8px] leading-none pt-1">Receipt Date and Time<br><span id="lblTimestamp" class="font-mono">2026-03-07 125903</span></p>
                             </div>
                             
-                            <div class="flex flex-col items-center space-y-2 w-[85px]">
-                                
-                                <div class="w-[58px] h-[55px] border-[3px] border-black rounded flex flex-col items-center justify-between p-0.5 bg-white shadow-xs select-none">
-                                    <div class="w-full flex justify-between px-1 pt-0.5">
+                            <div class="flex flex-col items-center space-y-2">
+                                <div class="w-[56px] h-[52px] border-[3px] border-black rounded flex flex-col items-center justify-between p-0.5 bg-white shadow-xs">
+                                    <div class="w-full flex justify-between px-1.5 pt-1">
                                         <div class="w-[3px] h-3 bg-black"></div>
-                                        <div class="w-[12px] h-[3px] bg-black mt-1"></div>
+                                        <div class="w-[10px] h-[3px] bg-black mt-1"></div>
                                         <div class="w-[3px] h-3 bg-black"></div>
                                     </div>
-                                    <div class="w-6 h-[3px] bg-black -mt-1.5 rounded-full"></div>
-                                    <div class="w-full bg-[#facc15] border-t-[2.5px] border-black text-center text-[10px] font-black tracking-widest text-black py-[2px] leading-none">
+                                    <div class="w-5 h-[3px] bg-black -mt-1.5"></div>
+                                    <div class="w-full bg-[#facc15] border-t-[2px] border-black text-center text-[10px] font-black tracking-widest text-black py-[2px] leading-none">
                                         TRA
                                     </div>
                                 </div>
                                 
-                                <div class="w-[72px] h-[72px] bg-white border-2 border-black p-0.5 rounded flex flex-wrap items-center justify-center relative shadow-xs">
-                                    <div class="w-full h-full bg-black" style="clip-path: polygon(0 0, 32% 0, 32% 32%, 0 32%, 0 0, 68% 0, 100% 0, 100% 32%, 68% 32%, 68% 0, 0 68%, 32% 68%, 32% 100%, 0 100%, 0 68%, 100% 100%, 100% 68%, 68% 68%, 68% 100%);"></div>
-                                    <div class="absolute w-4 h-4 bg-white top-[26px] left-[26px]"></div>
+                                <div class="w-16 h-16 bg-white border border-gray-300 p-1 rounded flex flex-wrap items-center justify-center relative shadow-xs">
+                                    <div class="w-full h-full bg-slate-900" style="clip-path: polygon(0 0, 35% 0, 35% 35%, 0 35%, 0 0, 65% 0, 100% 0, 100% 35%, 65% 35%, 65% 0, 0 65%, 35% 65%, 35% 100%, 0 100%, 0 65%, 100% 100%, 100% 65%, 65% 65%, 65% 100%);"></div>
+                                    <div class="absolute w-3 h-3 bg-white top-6 left-6"></div>
                                 </div>
                             </div>
                         </div>
 
-                    </div>
-                </div> </div>
+                    </div> </div>
+            </div>
+
         </div>
 
     </div>
@@ -235,16 +223,15 @@
             document.getElementById('lblPassName').innerText = document.getElementById('passName').value || "-";
             document.getElementById('lblPassPhone').innerText = document.getElementById('passPhone').value || "-";
             document.getElementById('lblSeatNo').innerText = document.getElementById('seatNo').value || "-";
-            document.getElementById('lblSeatType').innerText = document.getElementById('seatType').value || "LUXURY";
             document.getElementById('lblPickup').innerText = document.getElementById('pickup').value || "MAIN TERMINAL";
             document.getElementById('lblDropoff').innerText = document.getElementById('dropoff').value || "DESTINATION HUB";
             
             const depValue = document.getElementById('depTime').value;
             const arrValue = document.getElementById('arrTime').value;
             
-            document.getElementById('lblReport').innerText = document.getElementById('reportTime').value + " HRS";
-            document.getElementById('lblDep').innerText = depValue + " HRS";
-            document.getElementById('lblArr').innerText = arrValue + " HRS";
+            document.getElementById('lblReport').innerText = document.getElementById('reportTime').value;
+            document.getElementById('lblDep').innerText = depValue;
+            document.getElementById('lblArr').innerText = arrValue;
             
             const fromCd = document.getElementById('fromCode').value || "DSM";
             const toCd = document.getElementById('toCode').value || "DOM";
@@ -254,8 +241,8 @@
             document.getElementById('lblToFull').innerText = toCd === "DOM" ? "DODOMA" : toCd + " AREA";
             
             document.getElementById('lblTravelDate').innerText = document.getElementById('travelDate').value || "MAR 11, 2026";
-            document.getElementById('lblHdrDep').innerText = depValue + " HRS";
-            document.getElementById('lblHdrArr').innerText = arrValue + " HRS";
+            document.getElementById('lblHdrDep').innerText = depValue;
+            document.getElementById('lblHdrArr').innerText = arrValue;
 
             const now = new Date();
             const year = now.getFullYear();
@@ -265,15 +252,10 @@
             const minutes = String(now.getMinutes()).padStart(2, '0');
             const seconds = String(now.getSeconds()).padStart(2, '0');
             
-            const formattedTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-            document.getElementById('lblTimestamp').innerText = formattedTime;
-            
-            // Generate pseudo-random transaction hash string match
-            const randomHash = Math.random().toString(36).substring(2, 6).toUpperCase();
-            document.getElementById('lblRctNum').innerText = `RCT: TRA-RCT-${year}${month}${day}-${randomHash}`;
+            document.getElementById('lblTimestamp').innerText = `${year}-${month}-${day} ${hours}${minutes}${seconds}`;
 
             updateFareDisplay();
-            alert("Data metrics packed into VFD template layout successfully.");
+            alert("Ticket preview updated successfully.");
         }
 
         function getStructuredTextMessage() {
@@ -284,7 +266,8 @@
                    `*ROUTE:* ${document.getElementById('lblFromCode').innerText} -> ${document.getElementById('lblToCode').innerText}\n` +
                    `*DATE:* ${document.getElementById('lblTravelDate').innerText}\n` +
                    `*BUS INFO:* ${document.getElementById('lblBusName').innerText} (${document.getElementById('lblBusReg').innerText})\n` +
-                   `*SEAT NO:* ${document.getElementById('lblSeatNo').innerText} [${document.getElementById('lblSeatType').innerText}]\n` +
+                   `*SEAT:* ${document.getElementById('lblSeatNo').innerText}\n` +
+                   `*REPORTING:* ${document.getElementById('lblReport').innerText}\n` +
                    `*DEPARTURE:* ${document.getElementById('lblDep').innerText}\n` +
                    `----------------------------\n` +
                    `*TOTAL FARE:* TZS ${currentFareValue.toLocaleString()}.00\n` +
@@ -298,6 +281,7 @@
             window.open(`sms:?body=${encodeURIComponent(smsText)}`, '_blank');
         }
 
+        // ENHANCED ASYNC SHARE PIPELINE FOR SYSTEM IMAGE ATTACHMENTS
         async function shareViaWhatsApp() {
             const targetElement = document.getElementById('ticketCard');
             
@@ -307,30 +291,31 @@
             }
 
             try {
-                // Generate pristine 3x density raw canvas configuration matching target
+                // Generate a crisp high-res layout snapshot natively
                 const canvas = await html2canvas(targetElement, { 
                     scale: 3, 
                     useCORS: true,
-                    backgroundColor: "#ffffff",
                     logging: false
                 });
 
                 canvas.toBlob(async (blob) => {
-                    const ticketImageFile = new File([blob], `VFD_RECEIPT_${document.getElementById('lblSeatNo').innerText || 'BOOKING'}.png`, { type: 'image/png' });
+                    const ticketImageFile = new File([blob], `ticket_${document.getElementById('lblSeatNo').innerText || 'booking'}.png`, { type: 'image/png' });
                     
+                    // Verify if OS browser supports direct visual file ecosystem streaming
                     if (navigator.canShare && navigator.canShare({ files: [ticketImageFile] })) {
                         await navigator.share({
                             files: [ticketImageFile],
-                            title: 'TRA Fiscal EFD Ticket Receipt',
-                            text: 'Your official verified trip confirmation.'
+                            title: 'Gerry Travel Ticket Invoice',
+                            text: 'Your official trip confirmation.'
                         });
                     } else {
+                        // Safe fallback route if native image piping is blocked on device
                         fallbackTextWhatsApp();
                     }
                 }, 'image/png');
 
             } catch (error) {
-                console.error("Direct screenshot capture channel skipped:", error);
+                console.error("Native image generation dropped:", error);
                 fallbackTextWhatsApp();
             }
         }
