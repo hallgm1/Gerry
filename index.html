@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AYOUB TRAVEL TICKET GEN</title>
+    <title>GERRY TRAVEL TICKET GEN</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
@@ -13,6 +13,7 @@
             background-size: 10px 1px;
             background-repeat: repeat-x;
         }
+        /* Forces text inside inputs to display visually as uppercase instantly */
         .force-uppercase {
             text-transform: uppercase;
         }
@@ -23,7 +24,7 @@
     <div class="w-full max-w-5xl space-y-6">
         
         <h1 class="text-white text-xl font-bold uppercase tracking-wider text-center my-2">
-            AYOUB TRAVEL TICKET GEN
+            GERRY TRAVEL TICKET GEN
         </h1>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
@@ -105,7 +106,7 @@
                 <div class="bg-white p-4 rounded-[1.5rem] shadow-xl sticky top-6">
                     <h2 class="text-xs font-bold text-[#4a5568] uppercase tracking-wider mb-4">4. Ticket Preview</h2>
                     
-                    <div id="ticketCard" class="bg-white text-black border border-gray-200 rounded-md overflow-hidden font-sans relative uppercase" style="width: 100%; max-w: 380px; margin: 0 auto;">
+                    <div id="ticketCard" class="bg-white text-black border border-gray-200 rounded-md overflow-hidden font-sans relative uppercase shadow-sm" style="width: 100%; max-w: 380px; margin: 0 auto;">
                         
                         <div class="p-4 flex justify-between items-start pb-2">
                             <div>
@@ -175,14 +176,14 @@
                             </div>
                             
                             <div class="flex flex-col items-center space-y-2">
-                                <div class="w-[58px] h-[52px] border-[2px] border-black rounded-sm flex flex-col items-center justify-between p-0.5 bg-white select-none">
-                                    <div class="w-full flex justify-between px-1 pt-0.5">
-                                        <div class="w-[2px] h-3 bg-black"></div>
-                                        <div class="w-[8px] h-[2px] bg-black mt-1"></div>
-                                        <div class="w-[2px] h-3 bg-black"></div>
+                                <div class="w-[56px] h-[52px] border-[3px] border-black rounded flex flex-col items-center justify-between p-0.5 bg-white shadow-xs">
+                                    <div class="w-full flex justify-between px-1.5 pt-1">
+                                        <div class="w-[3px] h-3 bg-black"></div>
+                                        <div class="w-[10px] h-[3px] bg-black mt-1"></div>
+                                        <div class="w-[3px] h-3 bg-black"></div>
                                     </div>
-                                    <div class="w-4 h-[2px] bg-black -mt-2"></div>
-                                    <div class="w-full bg-[#facc15] border-t border-black text-center text-[10px] font-black tracking-wider text-black py-px leading-none">
+                                    <div class="w-5 h-[3px] bg-black -mt-1.5"></div>
+                                    <div class="w-full bg-[#facc15] border-t-[2px] border-black text-center text-[10px] font-black tracking-widest text-black py-[2px] leading-none">
                                         TRA
                                     </div>
                                 </div>
@@ -194,9 +195,7 @@
                             </div>
                         </div>
 
-                    </div>
-
-                </div>
+                    </div> </div>
             </div>
 
         </div>
@@ -282,7 +281,8 @@
             window.open(`sms:?body=${encodeURIComponent(smsText)}`, '_blank');
         }
 
-        function shareViaWhatsApp() {
+        // ENHANCED ASYNC SHARE PIPELINE FOR SYSTEM IMAGE ATTACHMENTS
+        async function shareViaWhatsApp() {
             const targetElement = document.getElementById('ticketCard');
             
             if(currentFareValue === 0) {
@@ -290,28 +290,34 @@
                 return;
             }
 
-            html2canvas(targetElement, { 
-                scale: 3, 
-                useCORS: true,
-                logging: false,
-                allowTaint: true
-            }).then(canvas => {
-                canvas.toBlob(blob => {
-                    const trackingFile = new File([blob], `ticket_${document.getElementById('lblSeatNo').innerText || 'booking'}.png`, { type: 'image/png' });
+            try {
+                // Generate a crisp high-res layout snapshot natively
+                const canvas = await html2canvas(targetElement, { 
+                    scale: 3, 
+                    useCORS: true,
+                    logging: false
+                });
+
+                canvas.toBlob(async (blob) => {
+                    const ticketImageFile = new File([blob], `ticket_${document.getElementById('lblSeatNo').innerText || 'booking'}.png`, { type: 'image/png' });
                     
-                    if (navigator.canShare && navigator.canShare({ files: [trackingFile] })) {
-                        navigator.share({
-                            files: [trackingFile],
+                    // Verify if OS browser supports direct visual file ecosystem streaming
+                    if (navigator.canShare && navigator.canShare({ files: [ticketImageFile] })) {
+                        await navigator.share({
+                            files: [ticketImageFile],
                             title: 'Gerry Travel Ticket Invoice',
                             text: 'Your official trip confirmation.'
-                        }).catch(err => {
-                            fallbackTextWhatsApp();
                         });
                     } else {
+                        // Safe fallback route if native image piping is blocked on device
                         fallbackTextWhatsApp();
                     }
                 }, 'image/png');
-            });
+
+            } catch (error) {
+                console.error("Native image generation dropped:", error);
+                fallbackTextWhatsApp();
+            }
         }
 
         function fallbackTextWhatsApp() {
