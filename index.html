@@ -174,11 +174,32 @@
                                 <p class="text-gray-500 leading-tight">TRA VFD Number<br><span class="font-mono text-black">NULL</span></p>
                                 <p class="text-gray-400 text-[8px] leading-none pt-1">Receipt Date and Time<br><span id="lblTimestamp" class="font-mono">2026-03-07 125903</span></p>
                             </div>
-                            <div class="flex flex-col items-center space-y-1.5">
-                                <div class="flex items-center space-x-1 border border-amber-500 bg-amber-50 px-1.5 py-0.5 rounded text-[8px] font-black text-amber-800 tracking-tighter uppercase">
-                                    <span>⚖️</span> <span>TRA</span>
+                            
+                            <div class="flex flex-col items-center space-y-1">
+                                <div class="flex flex-col items-center justify-center bg-white border border-[#1e293b] rounded p-0.5 shadow-sm" style="width: 52px; height: auto;">
+                                    <div class="relative flex flex-col items-center border-[1.5px] border-black rounded-b-xl" style="width: 44px; height: 32px; border-top: none; background: #fff;">
+                                        <div class="absolute -top-[1.5px] left-0 right-0 h-[1.5px] bg-black"></div>
+                                        <div class="absolute -top-[5px] left-0 right-0 flex justify-between px-[2px]">
+                                            <div class="w-[1.5px] h-1 bg-black rotate-[25deg]"></div>
+                                            <div class="w-[1.5px] h-1 bg-black -rotate-[25deg]"></div>
+                                        </div>
+                                        <div class="flex flex-col items-center mt-[1px] w-full">
+                                            <div class="w-6 h-[1.5px] bg-black rounded-full"></div>
+                                            <div class="w-[1.5px] h-4 bg-black relative">
+                                                <div class="absolute -left-[9px] top-[2px] w-[3px] h-[3px] border border-black rounded-full bg-white"></div>
+                                                <div class="absolute -right-[9px] top-[2px] w-[3px] h-[3px] border border-black rounded-full bg-white"></div>
+                                                <div class="absolute -left-[8px] -top-[1px] w-2 h-[1px] bg-black origin-right rotate-[15deg]"></div>
+                                                <div class="absolute -right-[8px] -top-[1px] w-2 h-[1px] bg-black origin-left -rotate-[15deg]"></div>
+                                            </div>
+                                            <div class="w-2 h-1 bg-amber-400 border border-black rounded-sm -mt-[3px]"></div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-[#facc15] border border-black text-[7px] font-black tracking-widest text-center uppercase leading-none py-[1px] px-1 rounded-sm w-full -mt-[3px] z-10 scale-[0.95]">
+                                        TRA
+                                    </div>
                                 </div>
-                                <div class="w-16 h-16 bg-white border border-gray-300 p-1 rounded flex flex-wrap items-center justify-center relative">
+                                
+                                <div class="w-16 h-16 bg-white border border-gray-300 p-1 rounded flex flex-wrap items-center justify-center relative shadow-xs">
                                     <div class="w-full h-full bg-slate-900" style="clip-path: polygon(0 0, 35% 0, 35% 35%, 0 35%, 0 0, 65% 0, 100% 0, 100% 35%, 65% 35%, 65% 0, 0 65%, 35% 65%, 35% 100%, 0 100%, 0 65%, 100% 100%, 100% 65%, 65% 65%, 65% 100%);"></div>
                                     <div class="absolute w-3 h-3 bg-white top-6 left-6"></div>
                                 </div>
@@ -234,7 +255,6 @@
             document.getElementById('lblHdrDep').innerText = depValue;
             document.getElementById('lblHdrArr').innerText = arrValue;
 
-            // Updated timestamp tracking format to match strict 24-hour presentation
             const now = new Date();
             const year = now.getFullYear();
             const month = String(now.getMonth() + 1).padStart(2, '0');
