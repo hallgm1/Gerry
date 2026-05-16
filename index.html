@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AYOUB TRAVEL TICKET GEN</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        .ticket-dashed-line {
+            background-image: linear-gradient(to right, #ccc 50%, rgba(255,255,255,0) 0%);
+            background-position: bottom;
+            background-size: 10px 1px;
+            background-repeat: repeat-x;
+        }
+    </style>
+</head>
+<body class="bg-[#2d3748] font-sans text-[#1a202c] min-h-screen p-4 flex flex-col items-center">
+
+    <div class="w-full max-w-5xl space-y-6">
+        
+        <h1 class="text-white text-xl font-bold uppercase tracking-wider text-center my-2">
+            Ayoub Travel Ticket Gen
+        </h1>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            
+            <div class="lg:col-span-7 space-y-6">
+                
+                <div class="bg-white p-6 rounded-[1.5rem] shadow-xl">
+                    <h2 class="text-xs font-bold text-[#4a5568] uppercase tracking-wider mb-3">1. Paste Request</h2>
+                    <textarea id="rawInput" rows="3" placeholder="Paste customer WhatsApp text here..." 
+                        class="w-full p-4 bg-[#f7fafc] border border-gray-200 rounded-xl text-sm outline-none focus:border-blue-500 transition-all"></textarea>
+                    <button onclick="parseRequest()" class="w-full mt-3 bg-[#1a202c] hover:bg-slate-800 text-white py-3.5 rounded-xl font-bold uppercase text-xs tracking-wider transition-all">
+                        Extract Details
+                    </button>
+                </div>
+
+                <div class="bg-white p-6 rounded-[1.5rem] shadow-xl space-y-4">
+                    <h2 class="text-xs font-bold text-[#4a5568] uppercase tracking-wider">2. Complete Ticket Details (Fillable fields)</h2>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <input type="text" id="busName" placeholder="Bus Name" class="p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none">
+                        <input type="text" id="busReg" placeholder="REG NUMBER" class="p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none uppercase">
+                        
+                        <input type="text" id="passName" placeholder="Passenger Name" class="p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none">
+                        <input type="text" id="passPhone" placeholder="Phone Number" class="p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none">
+                        
+                        <input type="text" id="seatNo" placeholder="Seat No" class="p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none">
+                        <input type="text" id="seatType" placeholder="Seat Type" class="p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none">
+                        
+                        <input type="text" id="pickup" placeholder="Pickup Point" class="p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none">
+                        <input type="text" id="dropoff" placeholder="Drop off Point" class="p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none">
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-3 pt-2">
+                        <div>
+                            <label class="text-[10px] font-bold text-gray-400 uppercase block mb-1">Reporting</label>
+                            <input type="text" id="reportTime" value="05:30 AM" class="w-full p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-gray-400 uppercase block mb-1">Departure</label>
+                            <input type="text" id="depTime" value="06:00 AM" class="w-full p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-gray-400 uppercase block mb-1">Arrival</label>
+                            <input type="text" id="arrTime" value="15:00" class="w-full p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-3">
+                        <div>
+                            <label class="text-[10px] font-bold text-gray-400 uppercase block mb-1">From City/Code</label>
+                            <input type="text" id="fromCode" placeholder="DSM" class="w-full p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none uppercase">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-gray-400 uppercase block mb-1">To City/Code</label>
+                            <input type="text" id="toCode" placeholder="DOM" class="w-full p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none uppercase">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-gray-400 uppercase block mb-1">Travel Date</label>
+                            <input type="text" id="travelDate" placeholder="Mar 11, 2026" class="w-full p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="text-[10px] font-bold text-gray-400 uppercase block mb-1">Header Dep. Time</label>
+                            <input type="text" id="hdrDepTime" value="06:00" class="w-full p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-gray-400 uppercase block mb-1">Header Arr. Time</label>
+                            <input type="text" id="hdrArrTime" value="15:00" class="w-full p-3 bg-[#f7fafc] rounded-xl border border-gray-200 text-sm outline-none">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-[1.5rem] shadow-xl space-y-4">
+                    <h3 class="text-xs font-bold text-[#4a5568] uppercase tracking-wider">3. Fare & Actions</h3>
+                    <div>
+                        <label class="text-[11px] font-bold text-gray-400 uppercase tracking-widest ml-1">Total Ticket Fare</label>
+                        <input type="number" id="baseFare" oninput="updateFareDisplay()" placeholder="Enter Ticket Fare" 
+                            class="w-full mt-1 p-4 bg-green-50/50 border border-green-200 text-green-900 rounded-xl text-lg font-bold outline-none focus:border-green-500">
+                    </div>
+
+                    <button onclick="generatePreview()" class="w-full bg-[#1a202c] hover:bg-slate-800 text-white py-4 rounded-xl font-bold uppercase text-xs tracking-widest shadow-md transition-all">
+                        Preview Ticket
+                    </button>
+
+                    <div class="grid grid-cols-2 gap-3 pt-1">
+                        <button onclick="shareViaSMS()" class="bg-[#2d3748] hover:bg-slate-700 text-white py-3.5 px-3 rounded-xl font-bold text-[11px] uppercase tracking-wide text-center transition-all">
+                            Share VIA SMS<br><span class="text-[9px] font-normal opacity-70">(Send Text)</span>
+                        </button>
+                        <button onclick="shareViaWhatsApp()" class="bg-[#25D366] hover:bg-[#20ba5a] text-white py-3.5 px-3 rounded-xl font-bold text-[11px] uppercase tracking-wide text-center transition-all">
+                            Share VIA WhatsApp<br><span class="text-[9px] font-normal opacity-90">(Share Image)</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="lg:col-span-5">
+                <div class="bg-white p-4 rounded-[1.5rem] shadow-xl sticky top-6">
+                    <h2 class="text-xs font-bold text-[#4a5568] uppercase tracking-wider mb-4">4. Ticket Preview</h2>
+                    
+                    <div id="ticketCard" class="bg-white text-black border border-gray-200 rounded-md overflow-hidden font-sans relative" style="width: 100%; max-w: 380px; margin: 0 auto;">
+                        
+                        <div class="p-4 flex justify-between items-start pb-2">
+                            <div>
+                                <h3 id="lblBusHeader" class="font-extrabold text-base tracking-tight uppercase">HAPPY NATION</h3>
+                            </div>
+                            <div>
+                                <span class="bg-[#25D366] text-white text-[9px] font-extrabold px-2 py-0.5 rounded uppercase">Paid</span>
+                            </div>
+                        </div>
+
+                        <div class="px-4 py-2 flex justify-between items-center text-xs">
+                            <div class="w-1/3">
+                                <span class="text-[10px] text-gray-400 block">From</span>
+                                <span id="lblFromCode" class="font-black text-lg block leading-tight">DSM</span>
+                                <span id="lblFromFull" class="text-[9px] text-gray-500 block truncate">DAR ES SALAAM</span>
+                                <span id="lblHdrDep" class="text-[10px] font-bold text-gray-700 block">06:00</span>
+                            </div>
+                            <div class="w-1/3 flex flex-col items-center justify-center px-1">
+                                <div class="flex items-center space-x-1 w-full justify-center">
+                                    <div class="w-2 h-2 rounded-full bg-yellow-400"></div>
+                                    <div class="h-[2px] bg-gray-200 flex-grow"></div>
+                                    <div class="w-5 h-5 rounded-full bg-green-600 flex items-center justify-center text-white text-[9px]">🚌</div>
+                                    <div class="h-[2px] bg-gray-200 flex-grow"></div>
+                                    <div class="w-2 h-2 rounded-full bg-teal-400"></div>
+                                </div>
+                                <span id="lblTravelDate" class="text-[9px] font-bold text-gray-600 mt-1 uppercase whitespace-nowrap">MAR 11, 2026</span>
+                            </div>
+                            <div class="w-1/3 text-right">
+                                <span class="text-[10px] text-gray-400 block">To</span>
+                                <span id="lblToCode" class="font-black text-lg block leading-tight">DOM</span>
+                                <span id="lblToFull" class="text-[9px] text-gray-500 block truncate">DODOMA</span>
+                                <span id="lblHdrArr" class="text-[10px] font-bold text-gray-700 block">15:00</span>
+                            </div>
+                        </div>
+
+                        <div class="p-4 space-y-2 text-[11px] border-t border-gray-100">
+                            <div class="font-bold text-gray-800 mb-1 text-[12px]">Bus Info</div>
+                            <div class="flex justify-between"><span class="text-gray-500">Bus Name</span><span id="lblBusName" class="font-bold text-right">-</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">Bus Reg Number</span><span id="lblBusReg" class="font-bold uppercase text-right">-</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">Reporting Time</span><span id="lblReport" class="font-semibold text-right">05:30</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">Departure Time</span><span id="lblDep" class="font-semibold text-right">06:00</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">Arrival Time</span><span id="lblArr" class="font-semibold text-right">15:00</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">Pickup</span><span id="lblPickup" class="font-medium text-right">-</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">Drop off Point</span><span id="lblDropoff" class="font-medium text-right">-</span></div>
+                        </div>
+
+                        <div class="p-4 space-y-2 text-[11px] border-t border-gray-50">
+                            <div class="font-bold text-gray-800 mb-1 text-[12px]">Passenger</div>
+                            <div class="flex justify-between"><span class="text-gray-500">Name</span><span id="lblPassName" class="font-bold text-right">-</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">Phone Number</span><span id="lblPassPhone" class="font-medium text-right">-</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">Seat No</span><span id="lblSeatNo" class="font-bold text-right">-</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">Seat Type</span><span id="lblSeatType" class="font-medium text-right">-</span></div>
+                        </div>
+
+                        <div class="mx-4 p-3 bg-gray-50 rounded-lg flex justify-between items-center border-t border-b border-gray-100 my-2">
+                            <span class="text-[11px] font-bold text-gray-500 uppercase">Total Fare</span>
+                            <span id="lblTotalFare" class="text-base font-black text-slate-900">TZS 0.00</span>
+                        </div>
+
+                        <div class="ticket-dashed-line my-4 w-full h-[1px]"></div>
+
+                        <div class="p-4 pt-1 flex justify-between items-end bg-gray-50/50">
+                            <div class="space-y-1 text-[10px] max-w-[60%]">
+                                <p class="font-bold text-gray-800">Legal Receipt Information</p>
+                                <p class="text-gray-500 leading-tight">Ticket Reference Number<br><span class="font-mono font-bold text-black text-[11px]">902168900060</span></p>
+                                <p class="text-gray-500 leading-tight">TRA VFD Number<br><span class="font-mono text-black">NULL</span></p>
+                                <p class="text-gray-400 text-[8px] leading-none pt-1">Receipt Date and Time<br><span id="lblTimestamp" class="font-mono">2026-03-07 125903</span></p>
+                            </div>
+                            <div class="flex flex-col items-center space-y-1.5">
+                                <div class="flex items-center space-x-1 border border-amber-500 bg-amber-50 px-1.5 py-0.5 rounded text-[8px] font-black text-amber-800 tracking-tighter">
+                                    <span>⚖️</span> <span>TRA</span>
+                                </div>
+                                <div class="w-16 h-16 bg-white border border-gray-300 p-1 rounded flex flex-wrap items-center justify-center relative">
+                                    <div class="w-full h-full bg-slate-900" style="clip-path: polygon(0 0, 35% 0, 35% 35%, 0 35%, 0 0, 65% 0, 100% 0, 100% 35%, 65% 35%, 65% 0, 0 65%, 35% 65%, 35% 100%, 0 100%, 0 65%, 100% 100%, 100% 65%, 65% 65%, 65% 100%);"></div>
+                                    <div class="absolute w-3 h-3 bg-white top-6 left-6"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div> </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        let currentFareValue = 0;
+
+        function parseRequest() {
+            const rawText = document.getElementById('rawInput').value;
+            
+            const passengerMatch = rawText.match(/\*PASSENGER:\*\s*(.*)/i);
+            const routeMatch = rawText.match(/\*ROUTE:\*\s*(.*)/i);
+            const dateMatch = rawText.match(/\*DATE:\*\s*(.*)/i);
+
+            if (passengerMatch) document.getElementById('passName').value = passengerMatch[1].trim();
+            if (dateMatch) document.getElementById('travelDate').value = dateMatch[1].trim();
+            
+            if (routeMatch) {
+                const fullRoute = routeMatch[1].trim();
+                const splitRoute = fullRoute.split('-');
+                if(splitRoute.length >= 2) {
+                    document.getElementById('fromCode').value = splitRoute[0].trim().toUpperCase();
+                    document.getElementById('toCode').value = splitRoute[1].trim().toUpperCase();
+                } else {
+                    document.getElementById('fromCode').value = fullRoute.substring(0,3).toUpperCase();
+                    document.getElementById('toCode').value = fullRoute.substring(3,6).toUpperCase();
+                }
+            }
+
+            if (passengerMatch || routeMatch || dateMatch) {
+                alert("Core request entries extracted dynamically!");
+            } else {
+                alert("Format structure unrecognized. Please enter manually.");
+            }
+        }
+
+        function updateFareDisplay() {
+            currentFareValue = parseFloat(document.getElementById('baseFare').value || 0);
+            document.getElementById('lblTotalFare').innerText = `TZS ${currentFareValue.toLocaleString()}.00`;
+        }
+
+        function generatePreview() {
+            const busNameInput = document.getElementById('busName').value || "HAPPY NATION";
+            document.getElementById('lblBusHeader').innerText = busNameInput;
+            document.getElementById('lblBusName').innerText = busNameInput;
+            
+            document.getElementById('lblBusReg').innerText = document.getElementById('busReg').value || "-";
+            document.getElementById('lblPassName').innerText = document.getElementById('passName').value || "-";
+            document.getElementById('lblPassPhone').innerText = document.getElementById('passPhone').value || "-";
+            document.getElementById('lblSeatNo').innerText = document.getElementById('seatNo').value || "-";
+            document.getElementById('lblSeatType').innerText = document.getElementById('seatType').value || "Standard";
+            document.getElementById('lblPickup').innerText = document.getElementById('pickup').value || "Main Terminal";
+            document.getElementById('lblDropoff').innerText = document.getElementById('dropoff').value || "Destination Hub";
+            
+            document.getElementById('lblReport').innerText = document.getElementById('reportTime').value;
+            document.getElementById('lblDep').innerText = document.getElementById('depTime').value;
+            document.getElementById('lblArr').innerText = document.getElementById('arrTime').value;
+            
+            const fromCd = document.getElementById('fromCode').value || "DSM";
+            const toCd = document.getElementById('toCode').value || "DOM";
+            document.getElementById('lblFromCode').innerText = fromCd;
+            document.getElementById('lblToCode').innerText = toCd;
+            document.getElementById('lblFromFull').innerText = fromCd === "DSM" ? "DAR ES SALAAM" : fromCd + " REGION";
+            document.getElementById('lblToFull').innerText = toCd === "DOM" ? "DODOMA" : toCd + " AREA";
+            
+            document.getElementById('lblTravelDate').innerText = document.getElementById('travelDate').value || "MAR 11, 2026";
+            document.getElementById('lblHdrDep').innerText = document.getElementById('hdrDepTime').value;
+            document.getElementById('lblHdrArr').innerText = document.getElementById('hdrArrTime').value;
+
+            const now = new Date();
+            const timeStr = now.toISOString().slice(0,10) + " " + now.toTimeString().slice(0,8).replace(/:/g,'');
+            document.getElementById('lblTimestamp').innerText = timeStr;
+
+            updateFareDisplay();
+            alert("Ticket preview updated successfully.");
+        }
+
+        function getStructuredTextMessage() {
+            return `*AYOUB TRAVEL - TRIP INVOICE*\n` +
+                   `----------------------------\n` +
+                   `*PASSENGER:* ${document.getElementById('lblPassName').innerText}\n` +
+                   `*PHONE:* ${document.getElementById('lblPassPhone').innerText}\n` +
+                   `*ROUTE:* ${document.getElementById('lblFromCode').innerText} -> ${document.getElementById('lblToCode').innerText}\n` +
+                   `*DATE:* ${document.getElementById('lblTravelDate').innerText}\n` +
+                   `*BUS INFO:* ${document.getElementById('lblBusName').innerText} (${document.getElementById('lblBusReg').innerText})\n` +
+                   `*SEAT:* ${document.getElementById('lblSeatNo').innerText} [${document.getElementById('lblSeatType').innerText}]\n` +
+                   `*REPORTING:* ${document.getElementById('lblReport').innerText}\n` +
+                   `*DEPARTURE:* ${document.getElementById('lblDep').innerText}\n` +
+                   `----------------------------\n` +
+                   `*TOTAL FARE:* TZS ${currentFareValue.toLocaleString()}.00\n` +
+                   `*M-PESA LIPA NO:* 5266238\n` +
+                   `----------------------------\n` +
+                   `*NB:* CONFIRM PAYMENT BY REPLYING WITH SCREENSHOT.`;
+        }
+
+        function shareViaSMS() {
+            const smsText = getStructuredTextMessage();
+            window.open(`sms:?body=${encodeURIComponent(smsText)}`, '_blank');
+        }
+
+        function shareViaWhatsApp() {
+            const targetElement = document.getElementById('ticketCard');
+            
+            if(currentFareValue === 0) {
+                alert("Please enter a ticket fare value first.");
+                return;
+            }
+
+            html2canvas(targetElement, { scale: 2, useCORS: true }).then(canvas => {
+                canvas.toBlob(blob => {
+                    const trackingFile = new File([blob], `ticket_${document.getElementById('lblSeatNo').innerText || 'booking'}.png`, { type: 'image/png' });
+                    
+                    if (navigator.canShare && navigator.canShare({ files: [trackingFile] })) {
+                        navigator.share({
+                            files: [trackingFile],
+                            title: 'Ayoub Travel Ticket Invoice',
+                            text: 'Your official trip confirmation.'
+                        }).catch(err => {
+                            fallbackTextWhatsApp();
+                        });
+                    } else {
+                        fallbackTextWhatsApp();
+                    }
+                }, 'image/png');
+            });
+        }
+
+        function fallbackTextWhatsApp() {
+            const encodedText = encodeURIComponent(getStructuredTextMessage());
+            window.open(`https://wa.me/?text=${encodedText}`, '_blank');
+        }
+    </script>
+</body>
+</html>
